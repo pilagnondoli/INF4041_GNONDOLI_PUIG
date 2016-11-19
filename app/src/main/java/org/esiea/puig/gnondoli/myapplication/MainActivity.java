@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 downloadAdapter = new DownloadAdapter(MainActivity.this, download_items);
                 listView.setAdapter(downloadAdapter);
 
-
                 Toast.makeText(getApplicationContext(), "Téléchargement en cours...", Toast.LENGTH_LONG).show();
             }
         });
