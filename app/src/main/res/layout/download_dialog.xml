@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <EditText
+        android:id="@+id/lien"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#953333"
+        android:layout_weight="0.12"
+        android:textColor="#ffffff" />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="163dp"
+        android:id="@+id/titre" />
+
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Télécharger"
+        android:id="@+id/telecharger"/>
+
+
+</LinearLayout>
+
