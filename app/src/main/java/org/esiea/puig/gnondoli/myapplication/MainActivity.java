@@ -22,7 +22,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 
 
-
 public class MainActivity extends AppCompatActivity {
     ListView listView;
     FloatingActionButton button;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkAndRequestPermissions();
         initialize();
     }
     public void initialize(){
