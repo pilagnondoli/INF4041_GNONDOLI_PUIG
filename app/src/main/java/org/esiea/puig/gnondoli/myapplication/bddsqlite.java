@@ -104,14 +104,14 @@ public class bddsqlite extends SQLiteOpenHelper {
 
         //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from notes", null );
+        Cursor res =  db.rawQuery( "select * from download_item", null );
         res.moveToFirst();
 
 
         while(res.isAfterLast() == false){
 
 
-            array_list.add(new Download_item(R.mipmap.plus,
+            array_list.add(new Download_item(R.mipmap.ic_launcher,
                     res.getString(res.getColumnIndex(NOTES_COLUMN_TITLE)),
                     res.getString(res.getColumnIndex(NOTES_COLUMN_DESCRIPTION))));
             res.moveToNext();

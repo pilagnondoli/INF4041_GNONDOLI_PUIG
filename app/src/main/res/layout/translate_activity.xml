@@ -6,44 +6,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_format" />
-
-
     <EditText
-        android:id="@+id/lien"
+        android:id="@+id/texte"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.12"
         android:textColor="@color/colorPrimaryDark" />
 
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titre" />
+        android:id="@+id/result" />
 
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Télécharger"
-        android:id="@+id/telecharger"/>
-
-
-
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ouvrir dans le navigateur"
-        android:id="@+id/open_in_browser"/>
+        android:text="Traduire"
+        android:id="@+id/translate"
+        android:onClick="mytranslate_click" />
 
 
 </LinearLayout>
