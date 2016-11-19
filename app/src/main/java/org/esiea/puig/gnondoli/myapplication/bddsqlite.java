@@ -107,7 +107,6 @@ public class bddsqlite extends SQLiteOpenHelper {
         Cursor res =  db.rawQuery( "select * from download_item", null );
         res.moveToFirst();
 
-
         while(res.isAfterLast() == false){
 
 
