@@ -97,7 +97,6 @@ public class bddsqlite extends SQLiteOpenHelper {
 
 
 
-
     public List<Download_item> getAllNotes() {
         List<Download_item> array_list = new ArrayList<>();
 
