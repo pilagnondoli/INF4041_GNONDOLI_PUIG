@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_content);
 
-        Snackbar.make(coordinatorLayout,"Maintenir le bouton longtemps pour afficher l'activité 2 avec le landscape",Snackbar.LENGTH_LONG).show();
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -120,18 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-     button.setOnLongClickListener(new View.OnLongClickListener() {
-         @Override
-         public boolean onLongClick(View v) {
-
-             Intent translateintent = new Intent(getApplicationContext(),TranslateActivity.class);
-             startActivity(translateintent);
-             return false;
-         }
-     });
-
-
 
         download_items = base.getAllNotes();
         downloadAdapter = new DownloadAdapter(MainActivity.this,download_items);
@@ -277,16 +264,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-
-
-
-
-
-
-
-
-
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.rotation:
+                Intent translateintent = new Intent(getApplicationContext(),TranslateActivity.class);
+                startActivity(translateintent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 

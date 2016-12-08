@@ -11,7 +11,9 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner_format" />
+        android:id="@+id/spinner_format"
+        style="@style/Widget.AppCompat.Spinner"
+        android:backgroundTint="@android:color/holo_green_dark" />
 
 
     <EditText
@@ -25,7 +27,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titre" />
+        android:id="@+id/titre"
+        android:text="Saisir un titre" />
 
 
     <Button
