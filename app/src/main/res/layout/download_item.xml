@@ -34,7 +34,7 @@
             android:scrollHorizontally="true"
             android:singleLine="true"
             android:marqueeRepeatLimit="marquee_forever"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
