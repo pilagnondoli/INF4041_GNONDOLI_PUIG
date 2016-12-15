@@ -6,6 +6,6 @@
         android:id="@+id/rotation"
         android:icon="@mipmap/rotation"
         android:showAsAction="always"
-        android:title="landscape"/>
+        android:title="Json"/>
 
 </menu>

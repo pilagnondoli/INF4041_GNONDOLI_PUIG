@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,8 +26,8 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".TranslateActivity"
-            android:screenOrientation="landscape" />
+        <activity android:name=".JsonActivity"
+            android:screenOrientation="fullSensor" />
     </application>
 
 </manifest>

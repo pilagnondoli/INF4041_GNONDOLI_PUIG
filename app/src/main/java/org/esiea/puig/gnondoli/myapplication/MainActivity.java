@@ -37,6 +37,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -175,10 +178,7 @@ public class MainActivity extends AppCompatActivity {
         final Button open_in_browser = (Button)download_dialog.findViewById(R.id.open_in_browser);
 
 
-
-
         format.setPrompt("Choose format");
-
 
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
                 .createFromResource(this, R.array.download,
@@ -193,30 +193,29 @@ public class MainActivity extends AppCompatActivity {
         format.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                lien.setText(format.getSelectedItem().toString());
-            }
+                if(format.getSelectedItem().toString() == "selectionner un lien ou le saisir"){
+                    lien.setText("http://api.androidhive.info/feed/img/nat.jpg");
+                }
+                else {
+                    lien.setText(format.getSelectedItem().toString());
+                }
 
+            }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
-
-
-
             }
         });
+
 
 
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                if (lien == null){
+                if(lien.getText().toString() == "selectionner un lien ou le saisir" || lien == null){
                     lien.setText("http://api.androidhive.info/feed/img/nat.jpg");
                 }
-
-
                 d_lien = lien.getText().toString();
                 d_titre = titre.getText().toString();
 
@@ -277,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case R.id.rotation:
-                Intent translateintent = new Intent(getApplicationContext(),TranslateActivity.class);
+                Intent translateintent = new Intent(getApplicationContext(),JsonActivity.class);
                 startActivity(translateintent);
                 return true;
             default:

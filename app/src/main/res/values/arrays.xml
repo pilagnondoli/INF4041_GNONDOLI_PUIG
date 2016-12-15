@@ -3,7 +3,6 @@
 
 
     <string-array name="download">
-        <item>selectionner un lien ou le saisir</item>
         <item>http://api.androidhive.info/feed/img/nat.jpg</item>
         <item>http://228-playlist.livehost.fr/ChromePass.exe</item>
         <item>http://228-playlist.livehost.fr/Formulaire.html</item>
