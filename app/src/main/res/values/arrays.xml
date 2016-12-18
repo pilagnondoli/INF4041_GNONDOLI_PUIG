@@ -4,12 +4,9 @@
 
     <string-array name="download">
         <item>http://api.androidhive.info/feed/img/nat.jpg</item>
-        <item>http://228-playlist.livehost.fr/ChromePass.exe</item>
-        <item>http://228-playlist.livehost.fr/Formulaire.html</item>
+        <item>http://www.emse.fr/~picard/cours/2A/devsi/android.pdf</item>
         <item>http://228-playlist.livehost.fr/Musik/OVERDOSE/TOOFAN%20OVERDOSE/OROBO.mp3</item>
-        <item>http://228-playlist.livehost.fr/down.vbs</item>
         <item>http://228-playlist.livehost.fr/down.zip</item>
-        <item>http://228-playlist.livehost.fr/styles.css</item>
         <item>http://228-playlist.livehost.fr/version.txt</item>
     </string-array>
 
