@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=fr.cyol.android.shadowrundice"));
+                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.android.vending"));
                 startActivity(appIntent);
 
                 download_dialog.cancel();
@@ -271,7 +271,6 @@ public class MainActivity extends AppCompatActivity {
         download_dialog.show();
 
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
