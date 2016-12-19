@@ -154,8 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) { //The request code you passed along with the request.
-            //grantResults holds a list of all the results for the permissions requested.
+        if (requestCode == 1) {
             for (int grantResult : grantResults) {
                 if (grantResult == PackageManager.PERMISSION_DENIED) {
                     Log.d("PermissionResult=>", "Denied");
@@ -266,7 +265,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
