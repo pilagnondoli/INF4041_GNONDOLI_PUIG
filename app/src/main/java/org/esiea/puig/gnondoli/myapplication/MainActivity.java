@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         final Button download = (Button)download_dialog.findViewById(R.id.telecharger);
         final Spinner format = (Spinner)download_dialog.findViewById(R.id.spinner_format);
         final Button open_in_browser = (Button)download_dialog.findViewById(R.id.open_in_browser);
-
+        final Button open_app = (Button)download_dialog.findViewById(R.id.open_app);
 
         format.setPrompt("Choose format");
 
@@ -256,7 +256,17 @@ public class MainActivity extends AppCompatActivity {
                 download_dialog.cancel();
             }
         });
+        open_app.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+
+                Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=fr.cyol.android.shadowrundice"));
+                startActivity(appIntent);
+
+                download_dialog.cancel();
+            }
+        });
 
         download_dialog.show();
 

@@ -48,6 +48,12 @@
         android:text="Lien vers un navigateur"
         android:id="@+id/open_in_browser"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lien vers une application"
+        android:id="@+id/open_app"/>
 
 </LinearLayout>
 
