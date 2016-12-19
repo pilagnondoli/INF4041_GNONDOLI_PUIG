@@ -2,7 +2,7 @@
     "contacts": [
         {
                 "id": "c200",
-                "name": "ESIEA",
+                "name": "ESIEA fichier ressource",
                 "email": "contact@esiea.fr",
                 "address": "xx-xx-xxxx,x - street, x - country",
                 "gender" : "male",

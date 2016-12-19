@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -21,6 +24,7 @@ import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -69,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkAndRequestPermissions();
         initialize();
 
 
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout)findViewById(R.id.main_content);
+        coordinatorLayout.setBackgroundColor(Color.GRAY);
 
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -128,42 +132,7 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(downloadAdapter);
 
     }
-    public void checkAndRequestPermissions() {
 
-
-        Dexter.checkPermissions(new MultiplePermissionsListener() {
-            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
-                List<String> grantedPermissions = new ArrayList<String>();
-                for(PermissionGrantedResponse response: report.getGrantedPermissionResponses()){
-                    if(!grantedPermissions.contains(response.getPermissionName())){
-                        grantedPermissions.add(response.getPermissionName());
-                    }
-                }
-                //Toast.makeText(getApplicationContext(), "Granted permissions:"+grantedPermissions.toString(), Toast.LENGTH_LONG).show();
-            }
-            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                token.continuePermissionRequest();
-            }
-        }, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.INTERNET);
-
-
-    }
-
-
-
-
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) {
-            for (int grantResult : grantResults) {
-                if (grantResult == PackageManager.PERMISSION_DENIED) {
-                    Log.d("PermissionResult=>", "Denied");
-                    return;
-                }
-            }
-            Log.d("PermissionResult=>", "All Permissions Granted");
-        }
-    }
     public void show_download_dialog(){
         download_dialog = new Dialog(this);
         download_dialog.requestWindowFeature(1);
@@ -207,38 +176,36 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(lien.getText().toString() == "selectionner un lien ou le saisir" || lien == null){
-                    lien.setText("http://api.androidhive.info/feed/img/nat.jpg");
-                }
+
                 d_lien = lien.getText().toString();
                 d_titre = titre.getText().toString();
 
 
-                String extension = lien.getText().toString().substring(lien.getText().toString().lastIndexOf("."));
+                //String extension = lien.getText().toString().substring(lien.getText().toString().lastIndexOf("."));
+
+                if(isOnline()){
+                    if(isValidUrl(lien.getText().toString())){
+                        dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                        DownloadManager.Request request = new DownloadManager.Request(
+                                Uri.parse(lien.getText().toString()));
 
 
-                String path = Directory.getAbsolutePath();
+                        request.allowScanningByMediaScanner();
+                        request.setTitle("MOBILE DEV : "+ titre);
+                        request.setNotificationVisibility(1);
+                        enqueue = dm.enqueue(request);
 
 
-                dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(lien.getText().toString()));
-
-
-                request.allowScanningByMediaScanner();
-                request.setTitle("MOBILE DEV : "+ titre);
-                request.setNotificationVisibility(1);
-                request.setDestinationInExternalPublicDir(path, titre + "."+extension);
-                enqueue = dm.enqueue(request);
-
-
-                Toast.makeText(MainActivity.this,"Téléchargement en cours ...",Toast.LENGTH_LONG).show();
-
+                        Toast.makeText(MainActivity.this,"Téléchargement en cours ...",Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(MainActivity.this,"Pas de connexion internet ...",Toast.LENGTH_LONG).show();
+                }
 
                 download_dialog.cancel();
             }
@@ -289,6 +256,19 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private boolean isValidUrl(String url) {
+        Pattern p = Patterns.WEB_URL;
+        Matcher m = p.matcher(url.toLowerCase());
+        return m.matches();
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
 

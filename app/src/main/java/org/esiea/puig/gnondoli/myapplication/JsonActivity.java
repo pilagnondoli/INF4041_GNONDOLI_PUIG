@@ -2,6 +2,9 @@ package org.esiea.puig.gnondoli.myapplication;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +39,7 @@ public class JsonActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private ListView lv;
 
+    private static String url = "http://82.236.131.8/contacts.json";
 
     ArrayList<HashMap<String, String>> contactList;
 
@@ -108,89 +112,94 @@ public class JsonActivity extends AppCompatActivity {
         protected Void doInBackground(Void... arg0) {
 
 
-            if (loadJSONFromResources() != null) {
+            HttpHandler sh = new HttpHandler();
+
+            String decodejson = sh.makeServiceCall(url);
+
+            JSONObject jsonObject = null;
+            JSONArray contacts = null;
+
+            if (isOnline() && (decodejson != null)) {
                 try {
-                    JSONObject jsonObj = new JSONObject(loadJSONFromResources());
-
-                    // Getting JSON Array node
-                    JSONArray contacts = jsonObj.getJSONArray("contacts");
-
-                    // looping through All Contacts
-                    for (int i = 0; i < contacts.length(); i++) {
-                        JSONObject c = contacts.getJSONObject(i);
-
-                        String id = c.getString("id");
-                        String name = c.getString("name");
-                        String email = c.getString("email");
-                        String address = c.getString("address");
-                        String gender = c.getString("gender");
-
-                        // Phone node is JSON Object
-                        JSONObject phone = c.getJSONObject("phone");
-                        String mobile = phone.getString("mobile");
-                        String home = phone.getString("home");
-                        String office = phone.getString("office");
-
-                        // tmp hash map for single contact
-                        HashMap<String, String> contact = new HashMap<>();
-
-                        // adding each child node to HashMap key => value
-                        contact.put("id", id);
-                        contact.put("name", name);
-                        contact.put("email", email);
-                        contact.put("mobile", mobile);
-
-                        // adding contact to contact list
-                        contactList.add(contact);
-                    }
-                } catch (final JSONException e) {
-                    Log.e(TAG, "Json parsing error: " + e.getMessage());
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getApplicationContext(),
-                                    "Json parsing error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG)
-                                    .show();
-                        }
-                    });
-
+                    jsonObject = new JSONObject(decodejson);
+                    contacts = jsonObject.getJSONArray("contacts");
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } else {
-                Log.e(TAG, "Couldn't get json from server.");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),
-                                "Couldn't get json from server. Check LogCat for possible errors!",
-                                Toast.LENGTH_LONG)
-                                .show();
-                    }
-                });
-
             }
+            else {
+                decodejson = loadJSONFromResources();
+                try {
+                    jsonObject = new JSONObject(loadJSONFromResources());
+                    contacts = jsonObject.getJSONArray("contacts");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // looping through All Contacts
+            for (int i = 0; i < contacts.length(); i++) {
+                JSONObject c = null;
+                try {
+                    c = contacts.getJSONObject(i);
+
+                    String id = c.getString("id");
+                    String name = c.getString("name");
+                    String email = c.getString("email");
+                    String address = c.getString("address");
+                    String gender = c.getString("gender");
+
+                    // Phone node is JSON Object
+                    JSONObject phone = c.getJSONObject("phone");
+                    String mobile = phone.getString("mobile");
+                    String home = phone.getString("home");
+                    String office = phone.getString("office");
+
+                    // tmp hash map for single contact
+                    HashMap<String, String> contact = new HashMap<>();
+
+                    // adding each child node to HashMap key => value
+                    contact.put("id", id);
+                    contact.put("name", name);
+                    contact.put("email", email);
+                    contact.put("mobile", mobile);
+
+                    // adding contact to contact list
+                    contactList.add(contact);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             return null;
         }
 
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            // Dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-            ListAdapter adapter = new SimpleAdapter(
-                    JsonActivity.this, contactList,
-                    R.layout.json_item, new String[]{"name", "email",
-                    "mobile"}, new int[]{R.id.name,
-                    R.id.email, R.id.mobile});
 
-            lv.setAdapter(adapter);
+            @Override
+            protected void onPostExecute (Void result){
+                super.onPostExecute(result);
+                // Dismiss the progress dialog
+                if (pDialog.isShowing())
+                    pDialog.dismiss();
+                /**
+                 * Updating parsed JSON data into ListView
+                 * */
+                ListAdapter adapter = new SimpleAdapter(
+                        JsonActivity.this, contactList,
+                        R.layout.json_item, new String[]{"name", "email",
+                        "mobile"}, new int[]{R.id.name,
+                        R.id.email, R.id.mobile});
+
+                lv.setAdapter(adapter);
+            }
+
+        public boolean isOnline() {
+            ConnectivityManager cm =
+                    (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return netInfo != null && netInfo.isConnectedOrConnecting();
         }
-
     }
-
 }
