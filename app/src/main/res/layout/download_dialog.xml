@@ -52,7 +52,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lien vers une application"
+        android:text="Lien vers google play"
         android:id="@+id/open_app"/>
 
 </LinearLayout>
